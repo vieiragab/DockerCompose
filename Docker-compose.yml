@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  oracle-db:
+    image: oracleinanutshell/oracle-xe-11g
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_DISABLE_ASYNCH_IO=true
+      - ORACLE_ENABLE_XDB=true
+    volumes:
+      - oracle-data:/u01/app/oracle/oradata
+    ports:
+      - '1521:1521'
+      - '8080:8080'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: speakeasy-api
+    environment:
+      - DB_HOST=oracle-db
+      - DB_PORT=1521
+      - DB_SID=XE
+      - DB_USER=rm94921
+      - DB_PASSWORD=020402
+    ports:
+      - '8080:8080'
+
+volumes:
+  oracle-data:
+    driver: local
