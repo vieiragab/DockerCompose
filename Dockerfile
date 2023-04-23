@@ -1,6 +1,5 @@
 FROM openjdk:8-jdk-alpine
 WORKDIR /usr/src/app
-COPY target/SpeakEasyAPI.jar .
 RUN addgroup -S myuser && adduser -S myuser -G myuser
 USER myuser:myuser
 RUN apk update \
